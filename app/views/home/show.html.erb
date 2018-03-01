@@ -1,9 +1,23 @@
+
+
 <div align = center><%= image_tag("brevard.png", :alt => "School of Engineering Logo") %></div>
 <h1 align = center>Workflow App Homepage</h1>
-<div align = center>
+
+<!-- Log in button for the home page. The idea behind having a redundant button in place is so that when a user arrives, "sign in" will be the first
+thing that jumps out at them -->
+<div>
   <% if current_user %>
-    <h4>Signed in as <strong><%= current_user.name %></strong></h4>.
+    <p align = center>
+      <strong>
+        Successfully signed in.
+      </strong>
+    </p>
   <% else %>
-    <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary btn-wide-1", id: "sign_in" %>
+    <div align = center><%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary btn-wide-1", id: "sign_in" %></div>
+    <p align = center>
+      <strong>
+        Placeholder welcome text
+      </strong>
+    </p>
   <% end %>
 </div>

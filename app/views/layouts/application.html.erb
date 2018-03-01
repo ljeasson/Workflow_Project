@@ -9,12 +9,12 @@
     <link href="jumbotron.css" rel="stylesheet">
   </head>
   <body>
-    <nav class="navbar navbar-toggleable-md navbar-custom bg-faded">
-      <h3 align = Middle, style = "color:white">
+    <nav class="navbar navbar-custom bg-faded">
+      <h3 align = Middle style = color:white>
         Workflow App
       </h3>
-        <%= image_tag "SoELogo-red70px-nob.png", size: "60x60" %>
-        <div align = "right">
+
+        <div align = right>
           <% if current_user %>
             Signed in as <strong><%= current_user.name %></strong>!
             <%= link_to "Sign out", signout_path, class: "btn btn-primary", id: "sign_out" %>

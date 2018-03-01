@@ -16,17 +16,27 @@
 @import "bootstrap-sprockets"
 @import "bootstrap"
 
-$navbar-custom-bg: #000066
-$navbar-custom-border: #000066
+$navbar-custom-bg: #14213d
+$navbar-custom-border: #14213d
 
 body
-  background: #f0f0f0
+  background: #f2f2f2
+
 .navbar-custom
-  background-color: $navbar-custom-bg
-  border-color: $navbar-custom-border
+  background-color: $navbar-custom-bg !important
+  border-color: $navbar-custom-border !important
 
 .btn-primary, .btn-primary:active, .btn-primary:visited
     background-color: #c20000 !important
     border-color: #320000 !important
 .btn-primary:hover
   background-color: #920000 !important
+
+.footer
+  position: fixed
+  left: 0
+  bottom: 0
+  width: 100%
+  background-color: #14213d
+  color: white
+  text-align: center

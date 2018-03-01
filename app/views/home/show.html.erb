@@ -1,2 +1,9 @@
 <div align = center><%= image_tag("brevard.png", :alt => "School of Engineering Logo") %></div>
 <h1 align = center>Workflow App Homepage</h1>
+<div align = center>
+  <% if current_user %>
+    <h4>Signed in as <strong><%= current_user.name %></strong></h4>.
+  <% else %>
+    <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary btn-wide-1", id: "sign_in" %>
+  <% end %>
+</div>

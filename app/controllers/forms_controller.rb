@@ -1,17 +1,8 @@
 class FormsController < ApplicationController
-  def user_index
-
+  def index
   end
 
   def show
-
-  end
-
-  def admin_index
-    
-  end
-
-  def create
   end
 
   def new

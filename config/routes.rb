@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+  get 'forms/index'
+
+  get 'forms/show'
+
   get 'forms/user_index'
 
   get 'forms/admin_index'
@@ -28,7 +32,7 @@ Rails.application.routes.draw do
 
   resources :sessions, only: [:create, :destroy]
   resource :home, only: [:show]
-  resources :pages
+  resources :forms
 
 
 end

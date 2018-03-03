@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  root to: "home#show"
+
   get 'auth/:provider/callback', to: 'sessions#create'
   get 'auth/failure', to: redirect('/')
   get 'signout', to: 'sessions#destroy', as: 'signout'
@@ -7,5 +10,5 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :pages
 
-  root to: "home#show"
+
 end

@@ -13,6 +13,9 @@ gem 'rails', '~> 5.1.5'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 
+#Using cancancan for user permissions/authorizations. Allows app to restrict specific roles and user access to certain objects. e.g An index of all active form models.
+gem 'cancancan', '~> 2.0'
+
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server

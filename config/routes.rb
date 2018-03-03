@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  get 'form_types/index'
+
+  get 'form_types/show'
+
+  get 'form_types/new'
+
+  get 'form_types/edit'
+
+  get 'form_types/create'
+
+  get 'form_types/update'
+
+  get 'form_types/destroy'
+
   get 'form_template/show'
 
   get 'form_template/new'

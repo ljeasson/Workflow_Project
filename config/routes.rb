@@ -1,5 +1,25 @@
 Rails.application.routes.draw do
 
+  get 'forms/user_index'
+
+  get 'forms/admin_index'
+
+  get 'forms/create'
+
+  get 'forms/new'
+
+  get 'forms/edit'
+
+  get 'forms/destroy'
+
+  get 'pages/index'
+
+  get 'pages/create'
+
+  get 'pages/new'
+
+  get 'pages/destroy'
+
   root to: "home#show"
 
   get 'auth/:provider/callback', to: 'sessions#create'

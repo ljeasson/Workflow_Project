@@ -19,7 +19,7 @@
             <font color ="white">Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
             <%= link_to "Sign out", signout_path, class: "btn btn-primary", id: "sign_out" %>
           <% else %>
-            <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary", id: "sign_in" %>
+            <!-- Commented this out: <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary", id: "sign_in" %> -->
           <% end %>
         </div>
       </nav>

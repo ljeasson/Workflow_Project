@@ -1,2 +1,23 @@
-<h1>FormTypes#index</h1>
-<p>Find me in app/views/form_types/index.html.erb</p>
+<h1>Listing form templates: </h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @form_types.each do |form_type| %>
+  <tr>
+    <td><%= form_type.name %></td>
+    <td><%= link_to 'Show', form_type %></td>
+    <td><%= link_to 'Edit', edit_form_type_path(form_type) %></td>
+    <td><%= link_to 'Destroy', form_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New form template', new_form_type_path %>

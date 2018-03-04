@@ -1,2 +1,18 @@
-<h1>Forms#show</h1>
-<p>Find me in app/views/forms/show.html.erb</p>
+<h1>Form Details:</h1>
+
+<p>
+  <b>Name:</b>
+  <%= @form.name %>
+</p>
+
+<% @form.properties.each do |name, value| %>
+  <p>
+    <b><%= name.humanize %>:</b>
+    <%= value %>
+  </p>
+<% end %>
+
+<p>
+  <%= link_to 'Edit', edit_form_path(@form) %> |
+  <%= link_to 'Back to Forms', forms_path %>
+</p>

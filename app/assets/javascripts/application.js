@@ -12,6 +12,7 @@
 // https://launchschool.com/blog/integrating-rails-and-bootstrap-part-1 link to the bootstrap tutorial
 // for reference in case I royally screw things up -- Caelan
 //= require rails-ujs
+//= require jquery
 //= require turbolinks
 //= require bootstrap-sprockets
 //= require_tree .

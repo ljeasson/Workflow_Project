@@ -1,6 +1,7 @@
 class Form < ApplicationRecord
 
-attr_accessible :name, :form_type_id, :properties
+#attr_accessible :name, :form_type_id, :properties
+
 belongs_to :form_type
 serialize :properties, Hash
 

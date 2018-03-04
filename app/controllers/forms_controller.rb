@@ -8,7 +8,7 @@ class FormsController < ApplicationController
   end
 
   def new
-    @form = Form.new(form_type_id: params[:form_type_id])
+    @form = Form.new
   end
 
   def edit
@@ -38,4 +38,11 @@ class FormsController < ApplicationController
     @form.destroy
     redirect_to forms_url
   end
+
+  private
+
+  def form_params
+    params.permit(:name, :form_type_id, :properties)
+  end
+
 end

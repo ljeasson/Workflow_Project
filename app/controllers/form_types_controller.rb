@@ -33,7 +33,7 @@ class FormTypesController < ApplicationController
   end
 
   def create
-    @form_type = FormType.new(params[:form_type])
+    @form_type = FormType.new(form_type_params)
 
     respond_to do |format|
       if @form_type.save
@@ -50,8 +50,8 @@ class FormTypesController < ApplicationController
     @form_type = FormType.find(params[:id])
 
     respond_to do |format|
-      if @form_type.update_attributes(params[:form_type])
-        format.html { redirect_to @form_type, notice: 'Product type was successfully updated.' }
+      if @form_type.update_attributes(form_type_params)
+        format.html { redirect_to @form_type, notice: 'Form type was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -68,5 +68,10 @@ class FormTypesController < ApplicationController
       format.html { redirect_to form_types_url }
       format.json { head :no_content }
     end
+  end
+
+  private
+  def form_type_params
+    params.require(:form_type).permit(:name, :id, fields_attributes: [:name, :fields_attributes, :required])
   end
 end

@@ -14,4 +14,5 @@ validate :validate_properties
       end
     end
   end
+
 end

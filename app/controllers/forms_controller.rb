@@ -8,7 +8,8 @@ class FormsController < ApplicationController
   end
 
   def new
-    @form = Form.new
+    @form = Form.new(form_type_id: params[:form_type_id])
+
   end
 
   def edit
@@ -42,7 +43,7 @@ class FormsController < ApplicationController
   private
 
   def form_params
-    params.permit(:name, :form_type_id, :properties)
+    params.require(form).permit(:name, :form_type_id, :properties)
   end
 
 end

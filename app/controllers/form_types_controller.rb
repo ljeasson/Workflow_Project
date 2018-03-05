@@ -72,6 +72,6 @@ class FormTypesController < ApplicationController
 
   private
   def form_type_params
-    params.require(:form_type).permit(:name, :id, fields_attributes: [:name, :id, :fields_attributes, :required, :_destroy, :destroy, :remove])
+    params.require(:form_type).permit(:name, :id, fields_attributes: [:name, :id, :fields_attributes, :field_type, :required, :_destroy, :destroy, :remove])
   end
 end

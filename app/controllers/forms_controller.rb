@@ -35,7 +35,7 @@ class FormsController < ApplicationController
 
   def update
     @form = Form.find(params[:id])
-    if @form.update_attributes(params[:form])
+    if @form.update_attributes(params[:form].permit!)
       redirect_to @form, notice: 'Form was successfully updated.'
     else
       render action: "edit"

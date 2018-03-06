@@ -3,7 +3,7 @@ class Form < ApplicationRecord
 #attr_accessible :name, :form_type_id, :properties
 
 belongs_to :form_type
-serialize :properties, Hash
+serialize :properties, JSON
 
 validate :validate_properties
 

@@ -17,6 +17,14 @@ class FormsController < ApplicationController
   end
 
   def create
+
+    #if params[:form].try(:fetch, :properties, {}).kind_of?(Hash)
+    #  properties_keys = params[:form].try(:fetch, :properties, {}).keys
+    #elseif params[:form].try(:fetch, :properties, {}).kind_of?(Array)
+    #  properties_keys = params[:form].try(:fetch, :properties, {}).map
+    #end
+
+    #@form = Form.new(params[:form].permit({:properties})
     @form = Form.new(params[:form].permit!)
     if @form.save
       redirect_to @form, notice: 'Form was successfully created.'
@@ -27,7 +35,7 @@ class FormsController < ApplicationController
 
   def update
     @form = Form.find(params[:id])
-    if @form.update_attributes(form_params)
+    if @form.update_attributes(params[:form])
       redirect_to @form, notice: 'Form was successfully updated.'
     else
       render action: "edit"
@@ -43,7 +51,10 @@ class FormsController < ApplicationController
   private
 
   def form_params
-    params.require(:form).permit( :id, :name, :form_type_id)
+
+    load_params = params.require(:form).permit(:name)
+    load_params[:properties] = params[:form][:properties]
+    load_params.permit!
   end
 
 end

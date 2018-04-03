@@ -5,9 +5,9 @@ has_many :assignments
 has_many :roles, through: :assignments
 
   def role?(role)
-  roles.any? { |r| r.name.underscore.to_sym == role }
+    roles.any? { |r| r.name.underscore.to_sym == role }
   end
-  
+
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|
       user.provider = auth.provider

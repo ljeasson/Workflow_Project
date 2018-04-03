@@ -19,7 +19,7 @@
 
   </div>
 
-
+  <!-- OpenStruct creates a structure(naturally) that allows us to obtain form properties from the serialized json in FORM_TYPES -->
   <%= f.fields_for :properties, OpenStruct.new(@form.properties) do |builder| %>
     <% @form.form_type.fields.each do |field| %>
       <%= render "forms/fields/#{field.field_type}", field: field, f: builder %>

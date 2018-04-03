@@ -17,8 +17,14 @@
 
       <ul class="nav navbar-nav">
         <li class="active"><%= link_to 'Home', root_path%></li>
-        <li class="active"><a href="/forms/">Forms</a></li>
-        <li class="active"><a href="/form_types/">Form Templates</a></li>
+
+        <!--Restrict user's access if they're not logged in.-->
+        <% if current_user %>
+          <li class="active"><a href="/forms/">Forms</a></li>
+          <% if current_user.role? :admin %>
+          <li class="active"><a href="/form_types/">Form Templates</a></li>
+          <% end %>
+        <% end %>
       </ul>
         <div align = right>
           <% if current_user %>

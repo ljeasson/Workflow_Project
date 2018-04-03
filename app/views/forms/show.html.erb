@@ -3,11 +3,17 @@
 <p>
   <b>Name:</b>
   <%= @form.name %>
+
 </p>
 
 <% @form.properties.each do |name, value| %>
   <p>
     <b><%= name.humanize %>:</b>
+
+    <% if value == "1"%>
+     <h1> =3 </h1>
+    <% end %>
+
     <%= value %>
   </p>
 <% end %>

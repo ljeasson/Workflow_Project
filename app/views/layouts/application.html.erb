@@ -10,10 +10,16 @@
   </head>
   <body>
     <nav class="navbar navbar-custom bg-faded">
-      <h3 align = Middle style = color:white>
-        Workflow App
-      </h3>
 
+      <div class="navbar-header">
+        <a class="navbar-brand">Project Workflow</a>
+      </div>
+
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to 'Home', root_path%></li>
+        <li class="active"><a href="/forms/">Forms</a></li>
+        <li class="active"><a href="/form_types/">Form Templates</a></li>
+      </ul>
         <div align = right>
           <% if current_user %>
             <font color ="white">Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
@@ -28,9 +34,5 @@
     </div>
   </body>
 
-  <!-- Static footer -->
-  <div class="footer">
-    <div align = center><%= image_tag("olemisslogo.png", :alt => "School of Engineering Logo", :size => "100x35") %></div>
-    <p>Workflow Webapp Footer</p>
-  </div>
+
 </html>

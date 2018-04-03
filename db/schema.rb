@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180304154633) do
+ActiveRecord::Schema.define(version: 20180307035447) do
 
   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180304154633) do
     t.string "name"
     t.bigint "form_type_id"
     t.text "properties"
+    t.string "uid"
   end
 
   create_table "forms_obsolete", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -64,6 +65,14 @@ ActiveRecord::Schema.define(version: 20180304154633) do
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "Lname"
+    t.string "Fname"
+    t.string "email"
+    t.string "psw"
+    t.string "degree"
+    t.bigint "dept_id"
+    t.bigint "role_id"
+    t.bigint "form_id"
   end
 
   add_foreign_key "assignments", "roles"

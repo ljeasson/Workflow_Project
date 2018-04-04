@@ -1,7 +1,7 @@
 class FormTypesController < ApplicationController
 
-  before_action :require_login
-  
+  before_action :require_login, :require_admin
+
   def index
 
     @form_types = FormType.all
@@ -83,6 +83,12 @@ class FormTypesController < ApplicationController
     unless !current_user.nil?
       flash[:error] = "You must be logged in to access this section"
       redirect_to root_path # halts request cycle
+    end
+  end
+
+  def require_admin
+    unless current_user.role? :admin
+      redirect_to root_path
     end
   end
 end

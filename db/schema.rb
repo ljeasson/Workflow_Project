@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180404020719) do
+ActiveRecord::Schema.define(version: 20180404023549) do
 
   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(version: 20180404020719) do
     t.datetime "updated_at", null: false
     t.index ["role_id"], name: "index_assignments_on_role_id"
     t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "form_fields", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -54,7 +61,6 @@ ActiveRecord::Schema.define(version: 20180404020719) do
   create_table "signatures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -65,18 +71,9 @@ ActiveRecord::Schema.define(version: 20180404020719) do
     t.datetime "oauth_expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "Lname"
-    t.string "Fname"
-    t.string "email"
-    t.string "psw"
-    t.string "degree"
-    t.bigint "dept_id"
-    t.bigint "role_id"
-    t.bigint "form_id"
-    t.index ["form_id"], name: "fk_rails_1df29d1970"
   end
 
   add_foreign_key "assignments", "roles"
   add_foreign_key "assignments", "users"
-  add_foreign_key "users", "forms"
+  add_foreign_key "comments", "users"
 end

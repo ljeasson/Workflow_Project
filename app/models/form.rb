@@ -1,6 +1,6 @@
 class Form < ApplicationRecord
 
-#attr_accessible :name, :form_type_id, :properties
+has_many :comments
 
 belongs_to :form_type
 serialize :properties, JSON

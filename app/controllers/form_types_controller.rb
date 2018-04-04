@@ -1,7 +1,9 @@
 class FormTypesController < ApplicationController
 
-
+  before_action :require_login
+  
   def index
+
     @form_types = FormType.all
 
     respond_to do |format|
@@ -11,6 +13,8 @@ class FormTypesController < ApplicationController
   end
 
   def show
+
+
     @form_type = FormType.find(params[:id])
 
     respond_to do |format|
@@ -73,5 +77,12 @@ class FormTypesController < ApplicationController
   private
   def form_type_params
     params.require(:form_type).permit(:name, :id, fields_attributes: [:name, :id, :fields_attributes, :field_type, :required, :_destroy, :destroy, :remove])
+  end
+
+  def require_login
+    unless !current_user.nil?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to root_path # halts request cycle
+    end
   end
 end

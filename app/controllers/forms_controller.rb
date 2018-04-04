@@ -1,4 +1,5 @@
 class FormsController < ApplicationController
+  before_action :require_login
   def index
     @forms = Form.all
   end
@@ -57,4 +58,10 @@ class FormsController < ApplicationController
     load_params.permit!
   end
 
+  def require_login
+    unless !current_user.nil?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to root_path # halts request cycle
+    end
+  end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180403221636) do
+ActiveRecord::Schema.define(version: 20180404020719) do
 
   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -73,8 +73,10 @@ ActiveRecord::Schema.define(version: 20180403221636) do
     t.bigint "dept_id"
     t.bigint "role_id"
     t.bigint "form_id"
+    t.index ["form_id"], name: "fk_rails_1df29d1970"
   end
 
   add_foreign_key "assignments", "roles"
   add_foreign_key "assignments", "users"
+  add_foreign_key "users", "forms"
 end

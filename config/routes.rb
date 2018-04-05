@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
 
+  get 'roles/new'
+
+  get 'roles/create'
+
+  get 'roles/destroy'
+
+  get 'roles/update'
+
   get 'assignments/new'
 
   get 'assignments/create'

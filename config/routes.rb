@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
 
 
+  get 'assignments/new'
+
+  get 'assignments/create'
+
+  get 'assignments/destroy'
+
+  get 'assignments/update'
+
   root to: "home#show"
 
   get 'auth/:provider/callback', to: 'sessions#create'

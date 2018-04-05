@@ -27,5 +27,7 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :forms
   resources :form_types
+  resources :roles
+  resources :assignments
 
 end

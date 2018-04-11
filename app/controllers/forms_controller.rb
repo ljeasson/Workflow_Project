@@ -19,13 +19,6 @@ class FormsController < ApplicationController
 
   def create
 
-    #if params[:form].try(:fetch, :properties, {}).kind_of?(Hash)
-    #  properties_keys = params[:form].try(:fetch, :properties, {}).keys
-    #elseif params[:form].try(:fetch, :properties, {}).kind_of?(Array)
-    #  properties_keys = params[:form].try(:fetch, :properties, {}).map
-    #end
-
-    #@form = Form.new(params[:form].permit({:properties})
     @form = Form.new(params[:form].permit!)
     if @form.save
       redirect_to @form, notice: 'Form was successfully created.'

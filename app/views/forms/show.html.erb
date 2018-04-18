@@ -20,18 +20,16 @@
   <%= link_to 'Back to Forms', forms_path %>
 </p>
 
-<% if (Signature.where(:form_id => @form.id).present?)%>
-<% signature = Signature.where(:form_id => @form.id).first %>
+<% if (Signature.where(:user_id => current_user.id).present?)%>
+<% signature = Signature.where(:user_id => current_user.id).first %>
 <% end %>
 <% #Defining variables for use in the form_tag
   form_id = @form.id
   @user = User.all
   @current_workflow = Signature.where(:user_id => current_user.id).first
   %>
-<% if (signature.user_id == current_user.id) %>
+<% if (signature.user_id == current_user.id && !signature.processed) %>
 
-
-  <h1> Auld. </h1>
   <%= form_tag new_signature_path do %>
     <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
     <%= hidden_field_tag("form_id", form_id) %>

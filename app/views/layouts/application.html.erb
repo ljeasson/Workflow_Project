@@ -33,7 +33,7 @@
       </ul>
         <div align = right>
           <% if current_user %>
-
+          
             <font color ="white"><% if current_user.role? :admin %> ♔ (Administrator) <% end %>Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
             <%= link_to "Sign out", signout_path, class: "btn btn-primary", id: "sign_out" %>
           <% else %>

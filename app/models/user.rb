@@ -8,6 +8,11 @@ has_many :roles, through: :assignments
     roles.any? { |r| r.name.underscore.to_sym == role }
   end
 
+  def role(user)
+    role = (Role.where(id: Assignment.where(user_id: user.id)).first)
+
+    return role.name
+  end
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize.tap do |user|

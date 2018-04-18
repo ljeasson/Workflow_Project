@@ -9,8 +9,8 @@
 
   <!-- For each form, examine each form individually to check relations to
       signatures and the current user -->
-  <% if (Signature.where(:form_id => form.id).present?)%>
-  <% signature = Signature.where(:form_id => form.id).first %>
+  <% if (Signature.where(:user_id => current_user.id).present?)%>
+  <% signature = Signature.where(:user_id => current_user.id).first %>
   <% end %>
   <div class="form">
     <h4>

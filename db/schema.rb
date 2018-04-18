@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180418001533) do
+ActiveRecord::Schema.define(version: 20180418013824) do
 
   create_table "assignments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20180418001533) do
     t.bigint "form_type_id"
     t.text "properties"
     t.bigint "user_id"
+    t.boolean "grad"
     t.index ["user_id"], name: "index_forms_on_user_id"
   end
 
@@ -63,6 +64,8 @@ ActiveRecord::Schema.define(version: 20180418001533) do
   create_table "signatures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "form_id"
+    t.index ["form_id"], name: "index_signatures_on_form_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -80,4 +83,5 @@ ActiveRecord::Schema.define(version: 20180418001533) do
   add_foreign_key "assignments", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "forms", "users"
+  add_foreign_key "signatures", "forms"
 end

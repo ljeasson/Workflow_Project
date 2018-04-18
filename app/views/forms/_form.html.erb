@@ -16,7 +16,9 @@
     <%= f.label :name, @form.form_type.name %><br />
     <%= f.label 'Student Name:' %>
     <%= f.text_field :name%>
-
+    <br>
+    <%= f.label 'Grad?(Leave unchecked if no)' %>
+    <%= f.check_box :grad %>
   </div>
 
   <!-- OpenStruct creates a structure(naturally) that allows us to obtain form properties from the serialized json in FORM_TYPES -->

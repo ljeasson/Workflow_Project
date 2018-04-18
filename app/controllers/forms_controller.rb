@@ -28,6 +28,9 @@ class FormsController < ApplicationController
     add_uid
   end
 
+  def insert_signature
+  end
+  
   def add_uid
 
     form = Form.last

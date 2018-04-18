@@ -17,7 +17,8 @@ Rails.application.routes.draw do
 
   get 'assignments/update'
 
-  get '/signatures/new', to: 'signatures#sign'
+  post '/signatures/new', to: 'signatures#new'
+
 
   root to: "home#show"
 

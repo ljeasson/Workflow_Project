@@ -25,6 +25,13 @@ class FormsController < ApplicationController
     else
       render action: "new"
     end
+    add_uid
+  end
+
+  def add_uid
+
+    form = Form.last
+    Form.update(form.id, :user_id => current_user.id)
   end
 
   def update

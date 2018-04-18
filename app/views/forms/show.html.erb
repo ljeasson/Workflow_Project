@@ -1,3 +1,6 @@
+<% if (@form.finalized) %>
+  <h3><div class="alart alert-info"> This form has been finalized. No more actions can be taken here. </div></h3>
+<% end %>
 <h1>Form Details:</h1>
 
 <p>
@@ -11,7 +14,16 @@
   <p>
     <b><%= name.humanize %>:</b>
 
+    <!-- If the value is either 0 or 1, we're dealing with a checkbox. -->
+    <% if  value == "0" %>
+    <!-- TODO: Render an unchecked box. -->
+    <%= "This should be an unchecked box" %>
+    <% elsif value == "1" %>
+      <!-- TODO: Render a checked box -->
+      <%= "This should be a checked box." %>
+    <% else %>
     <%= value %>
+    <%end %>
   </p>
 <% end %>
 
@@ -21,6 +33,8 @@
 </p>
 
 
+
+<!-- This is where I'm dealing with all workflow frontend related to their relative controllers. -->
 <% if (Signature.where(:form_id => @form.id).present?)%>
 <% @signature = Signature.where(:user_id => current_user.id).first %>
 
@@ -34,23 +48,28 @@
   <% if (!(@signature.nil?) && (@signature.user_id == current_user.id && !@signature.processed)) %>
 
     <%= form_tag new_signature_path do %>
-      <p>Signature:</p><%= text_field_tag "name", current_user.name %>
-      <p> Comments(optional): </p>
-      <%= text_area_tag "body", "", size: "30x5" %><br>
-      <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
-      <%= hidden_field_tag("form_id", form_id) %>
-      <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
-      <%= submit_tag "Send to Faculty Member"  %>
+      <%if !(@form.finalized) %>
+        <p>Signature:</p><%= text_field_tag "name", current_user.name %>
+        <p> Comments(optional): </p>
+        <%= text_area_tag "body", "", size: "30x5" %><br>
+
+        <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
+        <%= hidden_field_tag("form_id", form_id) %>
+        <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
+        <%= submit_tag "Send to Faculty Member"  %>
+      <% end %>
     <% end %> <!-- End form tag -->
 
   <% end %> <!-- End block checking for nil -->
 <% end %>
 
 <% if (current_user.role? :admin) %>
-  <%= form_tag finalize_form_path do %>
-    <%= hidden_field_tag("form_id", @form.id) %>
-    <%= hidden_field_tag("finalize", 1) %>
-    <%= submit_tag "Finalize" %>
+  <% if !(@form.finalized) %>
+    <%= form_tag finalize_form_path do %>
+      <%= hidden_field_tag("form_id", @form.id) %>
+      <%= hidden_field_tag("finalize", 1) %>
+      <%= submit_tag "Finalize" %>
+    <% end %>
   <% end %>
 <% end %>
 

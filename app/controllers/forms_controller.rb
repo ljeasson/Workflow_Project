@@ -15,6 +15,9 @@ class FormsController < ApplicationController
 
   def edit
     @form = Form.find(params[:id])
+    if !((@form.user_id == current_user.id) || (current_user.role? :admin))
+      redirect_to root_path
+    end
   end
 
   def create
@@ -26,11 +29,19 @@ class FormsController < ApplicationController
       render action: "new"
     end
     add_uid
+    insert_signature
   end
 
   def insert_signature
+    form = Form.last
+    user = User.where(:email => "talmadge12@gmail.com").first
+    if !form.grad
+      Signature.create(:form_id => form.id, :user_id => user.id)
+    end
+    if form.grad
+    end
   end
-  
+
   def add_uid
 
     form = Form.last

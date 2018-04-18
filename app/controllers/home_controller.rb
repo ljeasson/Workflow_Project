@@ -24,6 +24,8 @@ class HomeController < ApplicationController
       end
     end
 
+    # Right now, this is where I'm hardcoding the Grad/Undergrad group..
+    # We should put this in a control panel so that the admin can edit roles.
     if (User.where(id: User.where(email: "talmadge12@gmail.com")).present?)
       user = User.where(:email => "talmadge12@gmail.com").first
       admin = Role.where(:name => 'Undergrad Committee').first

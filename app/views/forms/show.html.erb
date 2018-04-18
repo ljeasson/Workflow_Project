@@ -23,11 +23,13 @@
 <% if (Signature.where(:form_id => @form.id).present?)%>
 <% signature = Signature.where(:form_id => @form.id).first %>
 <% end %>
+<% #Defining local vars
+  %>
 <% if (signature.user_id == current_user.id) %>
 
-
-<%= form_tag("/signatures/new", method: "sign") do %>
-  <%= select_tag "Select faculty member to send the form to next:", options_from_collection_for_select(User.all, :id, :email) %>
-  <%= submit_tag("Sign") %>
-<% end %>
+  <%= form_tag new_signature_path do %>
+    <%= select_tag "Select faculty member to send the form to next:", options_from_collection_for_select(User.all, :id, :email) %>
+    <%= label_tag @form.id%>
+    <%= submit_tag "Send" %>
+  <% end %>
 <% end %>

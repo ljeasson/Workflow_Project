@@ -16,8 +16,8 @@ Rails.application.routes.draw do
   get 'assignments/destroy'
 
   get 'assignments/update'
-  
-  get '/signatures/new', to: 'signatures#new'
+
+  get '/signatures/new', to: 'signatures#sign'
 
   root to: "home#show"
 
@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   resources :form_types
   resources :roles
   resources :assignments
+  resources :signatures
 
 end

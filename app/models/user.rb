@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 
 
 has_many :assignments
+has_many :forms
 has_many :roles, through: :assignments
 
   def role?(role)

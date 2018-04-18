@@ -4,14 +4,27 @@
   <p><strong>No forms</strong></p>
 <% end %>
 
+
 <% @forms.each do |form| %>
-<div class="form">
-  <h4><%= form.name %></h4>
-  <td><%= link_to 'Show', form %></td>
-  <td><%= link_to 'Edit', edit_form_path(form) %></td>
-  <td><%= link_to 'Destroy', form, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-</div>
-<% end %>
+
+  <!-- For each form, examine each form individually to check relations to
+      signatures and the current user -->
+  <% if (Signature.where(:form_id => form.id).present?)%>
+  <% signature = Signature.where(:form_id => form.id).first %>
+  <% end %>
+  <div class="form">
+    <h4>
+      <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signature.user_id == current_user.id))%>
+      <%= form.name %>
+      <td><%= link_to 'Show', form %></td>
+      <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <td><%= link_to 'Edit', edit_form_path(form) %></td><% end %>
+      <td><% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <%= link_to 'Delete', form, method: :delete, data: { confirm: 'Are you sure? This action is PERMANENT.' } %></td> <% end %>
+    </h4>
+  <% end %>
+  </div>
+
+  <% end %>
+
 
 <%= form_tag new_form_path, method: :get do %>
   <%= select_tag :form_type_id, options_from_collection_for_select(FormType.all, :id, :name) %>

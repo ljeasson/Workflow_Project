@@ -3,16 +3,36 @@
 <p>
   <b>Name:</b>
   <%= @form.name %>
+
 </p>
+
 
 <% @form.properties.each do |name, value| %>
   <p>
     <b><%= name.humanize %>:</b>
+
     <%= value %>
   </p>
 <% end %>
 
 <p>
-  <%= link_to 'Edit', edit_form_path(@form) %> |
+  <%if ((@form.user_id == current_user.id) || (current_user.role? :admin))%><%= link_to 'Edit', edit_form_path(@form) %> | <% end %>
   <%= link_to 'Back to Forms', forms_path %>
 </p>
+
+<% if (Signature.where(:form_id => @form.id).present?)%>
+<% signature = Signature.where(:form_id => @form.id).first %>
+<% end %>
+<% #Defining variables for use in the form_tag
+  form_id = @form.id
+
+  %>
+<% if (signature.user_id == current_user.id) %>
+
+
+  <%= form_tag new_signature_path do %>
+    <%= select_tag "Select faculty member to send the form to next:", options_from_collection_for_select(User.all, :email, :email) %>
+    <%= hidden_field_tag(:form_id, form_id.to_s) %>
+    <%= submit_tag "Send" %>
+  <% end %>
+<% end %>

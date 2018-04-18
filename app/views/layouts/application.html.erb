@@ -10,13 +10,31 @@
   </head>
   <body>
     <nav class="navbar navbar-custom bg-faded">
-      <h3 align = Middle style = color:white>
-        Workflow App
-      </h3>
 
+      <div class="navbar-header">
+        <p class="navbar-brand">U of M</p>
+      </div>
+
+
+      <!-- Navbar links. -->
+      <ul class="nav navbar-nav">
+        <li class="active"><%= link_to 'Home', root_path%></li>
+        <!--Restrict user's access if they're not logged in.-->
+        <% if current_user %>
+          <li class="active"><a href="/forms/">Forms</a></li>
+          <!-- Example of restricting form template access LINK to admin only. -->
+          <% if current_user.role? :admin %>
+          <li class="active"><a href="/form_types/">Form Templates</a></li>
+          <% end %>
+          <% if current_user.role? :admin %>
+          <li class="active"><a href="">Control Panel</a></li>
+          <% end %>
+        <% end %>
+      </ul>
         <div align = right>
           <% if current_user %>
-            <font color ="white">Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
+          
+            <font color ="white"><% if current_user.role? :admin %> ♔ (Administrator) <% end %>Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
             <%= link_to "Sign out", signout_path, class: "btn btn-primary", id: "sign_out" %>
           <% else %>
             <!-- Commented this out: <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary", id: "sign_in" %> -->
@@ -28,9 +46,5 @@
     </div>
   </body>
 
-  <!-- Static footer -->
-  <div class="footer">
-    <div align = center><%= image_tag("olemisslogo.png", :alt => "School of Engineering Logo", :size => "100x35") %></div>
-    <p>Workflow Webapp Footer</p>
-  </div>
+
 </html>

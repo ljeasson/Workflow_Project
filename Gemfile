@@ -15,6 +15,8 @@ gem 'autoprefixer-rails'
 gem 'jquery-rails', '~> 4.3.1'
 #Using cancancan for user permissions/authorizations. Allows app to restrict specific roles and user access to certain objects. e.g An index of all active form models.
 gem 'cancancan', '~> 2.0'
+#Using pundit for permissions, as well.
+gem "pundit"
 # Use mysql as the database for Active Record
 gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server

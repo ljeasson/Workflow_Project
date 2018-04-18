@@ -1,6 +1,8 @@
 class Form < ApplicationRecord
 
-#attr_accessible :name, :form_type_id, :properties
+has_many :comments
+has_many :signatures, :dependent => :delete_all
+has_one :user
 
 belongs_to :form_type
 serialize :properties, JSON

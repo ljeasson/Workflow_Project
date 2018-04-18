@@ -1,10 +1,12 @@
 class FormsController < ApplicationController
+  before_action :require_login
   def index
     @forms = Form.all
   end
 
   def show
     @form = Form.find(params[:id])
+    @user = User.order('created_at DESC')
   end
 
   def new
@@ -14,23 +16,37 @@ class FormsController < ApplicationController
 
   def edit
     @form = Form.find(params[:id])
+    if !((@form.user_id == current_user.id) || (current_user.role? :admin))
+      redirect_to root_path
+    end
   end
 
   def create
 
-    #if params[:form].try(:fetch, :properties, {}).kind_of?(Hash)
-    #  properties_keys = params[:form].try(:fetch, :properties, {}).keys
-    #elseif params[:form].try(:fetch, :properties, {}).kind_of?(Array)
-    #  properties_keys = params[:form].try(:fetch, :properties, {}).map
-    #end
-
-    #@form = Form.new(params[:form].permit({:properties})
     @form = Form.new(params[:form].permit!)
     if @form.save
       redirect_to @form, notice: 'Form was successfully created.'
     else
       render action: "new"
     end
+    add_uid
+    insert_signature
+  end
+
+  def insert_signature
+    form = Form.last
+    user = User.where(:email => "talmadge12@gmail.com").first
+    if !form.grad
+      Signature.create(:form_id => form.id, :user_id => user.id, :processed => FALSE)
+    end
+    if form.grad
+    end
+  end
+
+  def add_uid
+
+    form = Form.last
+    Form.update(form.id, :user_id => current_user.id)
   end
 
   def update
@@ -44,8 +60,12 @@ class FormsController < ApplicationController
 
   def destroy
     @form = Form.find(params[:id])
-    @form.destroy
-    redirect_to forms_url
+    if !((@form.user_id == current_user.id) || (current_user.role? :admin))
+      redirect_to root_path
+    else
+      @form.destroy
+      redirect_to forms_url
+    end
   end
 
   private
@@ -57,4 +77,10 @@ class FormsController < ApplicationController
     load_params.permit!
   end
 
+  def require_login
+    unless !current_user.nil?
+      flash[:error] = "You must be logged in to access this section"
+      redirect_to root_path # Halts request cycle.
+    end
+  end
 end

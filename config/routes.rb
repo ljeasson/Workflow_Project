@@ -1,6 +1,25 @@
 Rails.application.routes.draw do
 
 
+  get 'roles/new'
+
+  get 'roles/create'
+
+  get 'roles/destroy'
+
+  get 'roles/update'
+
+  get 'assignments/new'
+
+  get 'assignments/create'
+
+  get 'assignments/destroy'
+
+  get 'assignments/update'
+
+  post '/signatures/new', to: 'signatures#new'
+
+
   root to: "home#show"
 
   get 'auth/:provider/callback', to: 'sessions#create'
@@ -11,5 +30,8 @@ Rails.application.routes.draw do
   resource :home, only: [:show]
   resources :forms
   resources :form_types
+  resources :roles
+  resources :assignments
+  resources :signatures
 
 end

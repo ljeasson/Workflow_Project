@@ -20,4 +20,10 @@ thing that jumps out at them -->
       </strong>
     </p>
   <% end %>
+
+
+  <h1></h1>
+  <%  if (User.find_by(email: "")) %>
+    <h1> Found user </h1>
+  <% end %>
 </div>

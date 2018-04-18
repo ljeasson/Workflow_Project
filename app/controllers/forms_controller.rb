@@ -5,6 +5,8 @@ class FormsController < ApplicationController
   end
 
   def show
+
+
     @form = Form.find(params[:id])
     @user = User.order('created_at DESC')
   end
@@ -68,6 +70,18 @@ class FormsController < ApplicationController
     end
   end
 
+  def finalize
+
+    final = params[:finalize]
+    final = final.to_i
+    form_p = params[:form_id]
+    form_id = form_p.to_i
+    form = Form.where(:id => form_id).first
+    form.update(finalized: 1)
+    redirect_to root_path
+  end
+
+
   private
 
   def form_params
@@ -76,6 +90,7 @@ class FormsController < ApplicationController
     load_params[:properties] = params[:form][:properties]
     load_params.permit!
   end
+
 
   def require_login
     unless !current_user.nil?

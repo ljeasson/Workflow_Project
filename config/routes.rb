@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   post '/signatures/new', to: 'signatures#sign'
 
-
+  post '/form/finalize' => 'forms#finalize', :as => :finalize_form
   root to: "home#show"
 
   get 'auth/:provider/callback', to: 'sessions#create'

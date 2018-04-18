@@ -20,20 +20,49 @@
   <%= link_to 'Back to Forms', forms_path %>
 </p>
 
-<% if (Signature.where(:user_id => current_user.id).present?)%>
-<% signature = Signature.where(:user_id => current_user.id).first %>
-<% end %>
+
+<% if (Signature.where(:form_id => @form.id).present?)%>
+<% @signature = Signature.where(:user_id => current_user.id).first %>
+
 <% #Defining variables for use in the form_tag
   form_id = @form.id
   @user = User.all
   @current_workflow = Signature.where(:user_id => current_user.id).first
-  %>
-<% if (signature.user_id == current_user.id && !signature.processed) %>
 
-  <%= form_tag new_signature_path do %>
-    <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
-    <%= hidden_field_tag("form_id", form_id) %>
-    <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
-    <%= submit_tag "Send" %>
+
+  %>
+  <% if (!(@signature.nil?) && (@signature.user_id == current_user.id && !@signature.processed)) %>
+
+    <%= form_tag new_signature_path do %>
+      <p>Signature:</p><%= text_field_tag "name", current_user.name %>
+      <p> Comments(optional): </p>
+      <%= text_area_tag "body", "", size: "30x5" %><br>
+      <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
+      <%= hidden_field_tag("form_id", form_id) %>
+      <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
+      <%= submit_tag "Send to Faculty Member"  %>
+    <% end %> <!-- End form tag -->
+
+  <% end %> <!-- End block checking for nil -->
+<% end %>
+
+<% if (current_user.role? :admin) %>
+  <%= form_tag finalize_form_path do %>
+    <%= hidden_field_tag("form_id", @form.id) %>
+    <%= hidden_field_tag("finalize", 1) %>
+    <%= submit_tag "Finalize" %>
+  <% end %>
+<% end %>
+
+<% if ((Comment.where(:form_id => @form.id).any?) && ((@signature.user_id == current_user.id || (current_user.role? :admin))))  %>
+  <p> Comments: </p>
+  <%@comments = Comment.where(:form_id => @form.id) %>
+  <% @comments.each do |c| %>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <%= "[" + c.name + "]:"%>
+      <%= c.body %>
+    </div>
+  </div>
   <% end %>
 <% end %>

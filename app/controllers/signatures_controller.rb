@@ -4,6 +4,8 @@ class SignaturesController < ApplicationController
 
     form = params[:form_id]
     user = params[:user]
+    body = params[:body]
+    name = params[:name]
     current_si = params[:current_signer]
     current_work = params[:current_workflow]
     form_id = form.to_i
@@ -11,24 +13,28 @@ class SignaturesController < ApplicationController
     signer_id = current_si.to_i
     current_work_id = current_work.to_i
 
-    u = User.where(:id => user_id).first
-    f = Form.where(:id => form_id).first
+    if(!form_id.is_a? Integer)
+      redirect_to root_path
+    end
 
-    s = User.where(:id => signer_id).first
-    w = Signature.where(:id => current_work_id).first
-    Signature.create(:user_id => u.id, :form_id => f.id, :processed => 0)
+    if((name != "") && (form_id.is_a? Integer))
+      u = User.where(:id => user_id).first
+      f = Form.where(:id => form_id).first
 
-    w.update(processed: 1)
+      s = User.where(:id => signer_id).first
+      w = Signature.where(:id => current_work_id).first
+      Signature.create(:user_id => u.id, :form_id => f.id, :processed => 0)
+      Comment.create(:user_id => user_id, :name => name, :body => body, :form_id => form_id)
+      w.update(processed: 1)
+      redirect_to root_path
+    end
+
+
   end
 
   def new
-    form = :form_id
-    user = :user
-    form_id = form[1]
-    user_id = user[1]
 
     @signature = Signature.new
-    new_sign(user_id, form_id)
   end
 
   def create

@@ -6,6 +6,7 @@ class FormsController < ApplicationController
 
   def show
     @form = Form.find(params[:id])
+    @user = User.order('created_at DESC')
   end
 
   def new
@@ -36,7 +37,7 @@ class FormsController < ApplicationController
     form = Form.last
     user = User.where(:email => "talmadge12@gmail.com").first
     if !form.grad
-      Signature.create(:form_id => form.id, :user_id => user.id)
+      Signature.create(:form_id => form.id, :user_id => user.id, :processed => FALSE)
     end
     if form.grad
     end
@@ -59,8 +60,12 @@ class FormsController < ApplicationController
 
   def destroy
     @form = Form.find(params[:id])
-    @form.destroy
-    redirect_to forms_url
+    if !((@form.user_id == current_user.id) || (current_user.role? :admin))
+      redirect_to root_path
+    else
+      @form.destroy
+      redirect_to forms_url
+    end
   end
 
   private
@@ -75,7 +80,7 @@ class FormsController < ApplicationController
   def require_login
     unless !current_user.nil?
       flash[:error] = "You must be logged in to access this section"
-      redirect_to root_path # halts request cycle
+      redirect_to root_path # Halts request cycle.
     end
   end
 end

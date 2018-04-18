@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'assignments/destroy'
 
   get 'assignments/update'
+  
+  get '/signatures/new', to: 'signatures#new'
 
   root to: "home#show"
 

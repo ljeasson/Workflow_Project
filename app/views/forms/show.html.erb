@@ -19,3 +19,15 @@
   <%if ((@form.user_id == current_user.id) || (current_user.role? :admin))%><%= link_to 'Edit', edit_form_path(@form) %> | <% end %>
   <%= link_to 'Back to Forms', forms_path %>
 </p>
+
+<% if (Signature.where(:form_id => @form.id).present?)%>
+<% signature = Signature.where(:form_id => @form.id).first %>
+<% end %>
+<% if (signature.user_id == current_user.id) %>
+
+
+<%= form_tag("/signatures/new", method: "sign") do %>
+  <%= select_tag "Select faculty member to send the form to next:", options_from_collection_for_select(User.all, :id, :email) %>
+  <%= submit_tag("Sign") %>
+<% end %>
+<% end %>

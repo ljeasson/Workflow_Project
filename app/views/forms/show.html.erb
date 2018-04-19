@@ -6,7 +6,12 @@
 <p>
   <b>Name:</b>
   <%= @form.name %>
-
+  <% if @form.grad %>
+    <%= "(Graduate)"%>
+  <% end %>
+  <% if !@form.grad %>
+    <b><%= "(Undergraduate)"%></b>
+  <% end %>
 </p>
 
 
@@ -17,10 +22,10 @@
     <!-- If the value is either 0 or 1, we're dealing with a checkbox. -->
     <% if  value == "0" %>
     <!-- TODO: Render an unchecked box. -->
-    <%= "This should be an unchecked box" %>
+      <%= image_tag("unchecked.png", :alt => "[Unchecked box image.]") %>
     <% elsif value == "1" %>
       <!-- TODO: Render a checked box -->
-      <%= "This should be a checked box." %>
+      <%= image_tag("checked.png", :alt => "[Checked box image.]") %>
     <% else %>
     <%= value %>
     <%end %>

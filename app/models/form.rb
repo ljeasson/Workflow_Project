@@ -1,6 +1,6 @@
 class Form < ApplicationRecord
 
-has_many :comments
+has_many :comments, :dependent => :delete_all
 has_many :signatures, :dependent => :delete_all
 has_one :user
 

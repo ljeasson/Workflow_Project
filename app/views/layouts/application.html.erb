@@ -2,17 +2,20 @@
 
 <html>
   <head>
-    <title>Workflow App</title>
+    <title class="billboard">Workflow App</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
     <link href="jumbotron.css" rel="stylesheet">
   </head>
-  <body>
+  <body background= "https://i.ytimg.com/vi/tDKU1YikgGo/maxresdefault.jpg">
     <nav class="navbar navbar-custom bg-faded">
 
       <div class="navbar-header">
-        <p class="navbar-brand">U of M</p>
+        <a class="navbar-brand" rel="home" href="#" title="Home">
+       <img style="max-width:100px; margin-top: -7px;"
+            src="https://www.fanouflage.com/wp-content/uploads/2016/09/mu_banner2.png">
+   </a>
       </div>
 
 
@@ -33,9 +36,18 @@
       </ul>
         <div align = right>
           <% if current_user %>
-          
-            <font color ="white"><% if current_user.role? :admin %> ♔ (Administrator) <% end %>Signed in as </font><strong style = color:white><%= current_user.name %></strong>!
-            <%= link_to "Sign out", signout_path, class: "btn btn-primary", id: "sign_out" %>
+
+            <font color ="white" ><% if current_user.role? :admin %> ♔ (Administrator) <% end %>Signed in as </font><strong style = color:white class="username"><%= current_user.name %></strong>!
+
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+              </button>
+              <div class="dropdown-menu" aria-labelled-by="dropdownMenuButton">
+                <a class="dropdown-item" href="#"><%= link_to "Sign out", signout_path, id: "sign_out" %></a>
+              </div>
+            </div>
+
           <% else %>
             <!-- Commented this out: <%= link_to "Sign in with Google", "/auth/google_oauth2", class: "btn btn-primary", id: "sign_in" %> -->
           <% end %>

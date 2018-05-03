@@ -1,0 +1,10 @@
+<% if !(current_user.role? :admin)
+
+    redirect_to root_path
+  end
+  %>
+<h3> Here you can: </h3>
+
+<!--<%= link_to "New Role", new_role_path, class: "btn btn-primary"%><br><br>-->
+<%= link_to "Assign User To Role", new_assignment_path, class: "btn btn-primary"%><br><br>
+<!--<button type="button" class="btn btn-primary">Define workflow behavior</button><br><br>-->

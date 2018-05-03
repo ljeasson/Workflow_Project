@@ -11,16 +11,23 @@
 
       <!-- For each form, examine each form individually to check relations to
           signatures and the current user -->
-      <% signaturePresent = false%>
+      <% signaturePresent = false
+         template_name = "<<MISSING TEMPLATE>>"%>
+      <% if FormType.where(:id => form.form_type_id).present?
+         form_type = FormType.where(:id => form.form_type_id).first
+         template_name = form_type.name
+
+       end%>
       <% if (Signature.where(:user_id => current_user.id).present?)%>
       <% signature = Signature.where(:user_id => current_user.id).first
-         signaturePresent = true%>
+         signaturePresent = true
+         # allSignaturesForForm = Signature.where(:user_id => ).all%>
       <% end %>
       <div>
         <table>
           <tr>
             <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signaturePresent))%>
-            <td class="form_type"><%= form.name %></td>
+            <td class="form_type"><%= form.name %> - <%= template_name %> </td>
             <td><%= link_to 'Show', form , class: 'avibuttons'%></td>
             <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %>
             <td><%= link_to 'Edit', edit_form_path(form), class: 'avibuttons' %></td><% end %>

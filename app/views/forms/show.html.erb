@@ -1,6 +1,17 @@
 <% if (@form.finalized) %>
   <h3><div class="alart alert-info"> This form has been finalized. No more actions can be taken here. </div></h3>
 <% end %>
+<!-- This is where I'm dealing with all workflow frontend related to their relative controllers. -->
+<% if (Signature.where(:form_id => @form.id).present?)%>
+<% @signature = Signature.where(:user_id => current_user.id).first %>
+
+<% #Defining variables for use in the form_tag
+  form_id = @form.id
+  @user = User.all
+  @current_workflow = Signature.where(:user_id => current_user.id).first
+
+
+  %>
 <div class="dropsite">
 
   <% tepmlate_name= "<<NULL NAME DUE TO FORM TEMPLATE DELETION>>"
@@ -37,6 +48,15 @@
     <%end %>
   </p>
 <% end %>
+<% if Comment.where(:form_id => @form.id).present? %>
+  <%@comments2 = Comment.where(:form_id => @form.id) %>
+  <% @comments2.each do |c| %>
+  <p>Signature: <%= c.name %></p>
+  <% end %>
+ <%end %>
+
+
+
 </div>
     <div class="sidebarEdit">
       <h1>Form Details:</h1>
@@ -61,17 +81,7 @@
 
 
 
-      <!-- This is where I'm dealing with all workflow frontend related to their relative controllers. -->
-      <% if (Signature.where(:form_id => @form.id).present?)%>
-      <% @signature = Signature.where(:user_id => current_user.id).first %>
 
-      <% #Defining variables for use in the form_tag
-        form_id = @form.id
-        @user = User.all
-        @current_workflow = Signature.where(:user_id => current_user.id).first
-
-
-        %>
         <% if (!(@signature.nil?) && (@signature.user_id == current_user.id && !@signature.processed)) %>
 
           <%= form_tag new_signature_path do %>
@@ -100,8 +110,8 @@
         <% end %>
       <% end %>
 
-      <% if ((Comment.where(:form_id => @form.id).any?) && ((@signature.user_id == current_user.id || (current_user.role? :admin))))  %>
-        <p> Comments: </p>
+    <% if ((Comment.where(:form_id => @form.id).any?) && ((@signature.user_id == current_user.id || (current_user.role? :admin))))  %>
+       <p> Comments: </p>
         <%@comments = Comment.where(:form_id => @form.id) %>
         <% @comments.each do |c| %>
         <div class="panel panel-default">
@@ -111,8 +121,5 @@
           </div>
         </div>
     </div>
-
-
-
-  <% end %>
+    <% end %>
 <% end %>

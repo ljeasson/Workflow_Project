@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title class="billboard">Workflow App</title>
+    <title>Workflow App</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= csrf_meta_tags %>
@@ -15,7 +15,7 @@
         <a class="navbar-brand" rel="home" href="#" title="Home">
        <img style="max-width:100px; margin-top: -7px;"
             src="https://www.fanouflage.com/wp-content/uploads/2016/09/mu_banner2.png">
-   </a>
+        </a>
       </div>
 
 
@@ -40,12 +40,12 @@
             <font color ="white" ><% if current_user.role? :admin %> ♔ (Administrator) <% end %>Signed in as </font><strong style = color:white class="username"><%= current_user.name %></strong>!
 
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="caret"></span>
-              </button>
-              <div class="dropdown-menu" aria-labelled-by="dropdownMenuButton">
-                <a class="dropdown-item" href="#"><%= link_to "Sign out", signout_path, id: "sign_out" %></a>
-              </div>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="caret"></span>
+                </button>
+                <div class="dropdown-menu" aria-labelled-by="dropdownMenuButton">
+                  <a class="dropdown-item" href="#"><%= link_to "Sign out", signout_path, id: "sign_out" %></a>
+                </div>
             </div>
 
           <% else %>

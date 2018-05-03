@@ -48,9 +48,36 @@ body
     font-family: "Ariel"
     font-size: 16px
 
+
   input [type=text] :hover
   border-color: blue
 
+  @page
+    size: auto
+    margin: 0mm
+
+  @media print
+    body *
+      visibility: hidden
+    .sidebarEdit
+      display: none
+    .dropsite
+      visibility: visible
+    .dropsite
+      position: absolute
+      top: 0
+      left: 0
+
+
+
+.form_type
+  font-family: "Helvetica"
+  font-size: 14pt
+
+.newform
+  font-size: 12pt
+  text-decoration: underline
+  color: #404B69
 
 .navbar-custom
   background-color: $navbar-custom-bg !important
@@ -59,9 +86,6 @@ body
 .navbar-brand
   position: relative
   top: -30px
-.avibuttons
-  margin: 5px
-
 
 .btn-primary, .btn-primary:active, .btn-primary:visited
     background-color: #c20000 !important
@@ -69,21 +93,47 @@ body
 .btn-primary:hover
   background-color: #920000 !important
 
+
 .footer
-  position: fixed
-  left: 0
-  bottom: 0
-  width: 100%
-  background-color: #14213d
-  color: #696969
-  text-align: center
-  clear: both
+  display: none
+  // position: fixed
+  // left: 0
+  // bottom: 0
+  // width: 100%
+  // background-color: #14213d
+  // color: #696969
+  // text-align: center
+  // clear: both
+
+.add_fields
+  margin: 3px
+  background-color: #edeff0
+  color: #404B69
+  padding: 3px
+  border-radius: 5px
+
+.avibuttons2
+  display: block
+  margin: 3px
+  background-color: #edeff0
+  color: #404B69
+  padding: 3px
+  border-radius: 5px
+
+
+.avibuttons
+  display: block
+  margin: 3px
+  background-color: #edeff0
+  color: #404B69
+  padding: 3px
+  border-radius: 5px
 
 .dropsite
   background-color: #ffffff
   width: 8.5in
   height: 11in
-  padding: 1in
+  padding: .75in
   float: right
   margin-right: 300px
   margin-bottom: 100px
@@ -129,7 +179,7 @@ body
 .sidebarEdit
   background-color: #B7B7B7
   margin-left: 20px
-  border-radius: 5px
+  border-radius: 10px
   padding: 20px
   font-size: 105%
   float: left

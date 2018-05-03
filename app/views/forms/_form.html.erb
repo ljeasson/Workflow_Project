@@ -13,11 +13,11 @@
   <%= f.hidden_field :form_type_id %>
 
   <div class="field">
-    <%= f.label :name, @form.form_type.name %><br />
+    <b><%= f.label :name, @form.form_type.name %></b><br>
     <%= f.label 'Student Name:' %>
-    <%= f.text_field :name%>
+    <%= f.text_field :name, placeholder: "Name"%><br>
     <br>
-    <%= f.label 'Grad?(Leave unchecked if no)' %>
+    <%= f.label 'Grad?(Leave unchecked if no)' %><br>
     <%= f.check_box :grad %>
   </div>
 

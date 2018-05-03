@@ -16,14 +16,20 @@
       <% signature = Signature.where(:user_id => current_user.id).first
          signaturePresent = true%>
       <% end %>
-      <div class="form">
-        <h4>
-          <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signaturePresent))%>
-          <%= form.name %>
-          <td><%= link_to 'Show', form %></td>
-          <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <td><%= link_to 'Edit', edit_form_path(form) %></td><% end %>
-          <td><% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <%= link_to 'Delete', form, method: :delete, data: { confirm: 'Are you sure? This action is PERMANENT.' } %></td> <% end %>
-        </h4>
+      <div>
+        <table>
+          <tr>
+            <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signaturePresent))%>
+            <td class="form_type"><%= form.name %></td>
+            <td><%= link_to 'Show', form , class: 'avibuttons'%></td>
+            <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %>
+            <td><%= link_to 'Edit', edit_form_path(form), class: 'avibuttons' %></td><% end %>
+
+            <td><% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %>
+              <%= link_to 'Delete', form,class: 'avibuttons', method: :delete, data: { confirm: 'Are you sure? This action is PERMANENT.' } %></td> <% end %>
+
+          </tr>
+        </table>
       <% end %>
       </div>
 

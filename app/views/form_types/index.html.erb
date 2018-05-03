@@ -12,28 +12,21 @@
      then render the form template index as normal. -->
 <% if !current_user.nil? %>
   <% if current_user.role? :admin %>
-<div class="sidebar">
+<div class="sidebarEdit">
   <h1 class="editHead">Available Forms </h1>
 
     <table>
-      <tr>
-        <th>Name</th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-
     <% @form_types.each do |form_type| %>
-      <tr class=avibuttons>
-        <td class="avibuttons"><%= form_type.name %></td>
-        <td class="avibuttons"><%= link_to 'Show', form_type %></td>
-        <td class="avibuttons"><%= link_to 'Edit', edit_form_type_path(form_type) %></td>
-        <td class="avibuttons"><%= link_to 'Destroy', form_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr>
+        <td class = "form_type"><%= form_type.name%></td>
+        <td><%= link_to 'Show', form_type, class: 'avibuttons' %></td>
+        <td><%= link_to 'Edit', edit_form_type_path(form_type), class: 'avibuttons' %></td>
+        <td><%= link_to 'Destroy', form_type, method: :delete, data: { confirm: 'Are you sure?' }, class: 'avibuttons' %></td>
       </tr>
     <% end %>
     </table>
     <br />
-    <%= link_to 'New form template', new_form_type_path %>
+    <%= link_to 'Create a new form...', new_form_type_path, class: 'newform'%>
   </div>
 
   <% end %>

@@ -1,10 +1,12 @@
-<% if current_user.nil? %>
-  <h1> You must be logged in to view this page. </h1>
-<% end %>
 
+<div class="sidebarEdit">
+  <% if current_user.nil? %>
+    <h1> You must be logged in to view this page. </h1>
+  <% end %>
 
-<h1>New form:</h1>
+  <h1>New form:</h1>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', form_types_path %>
+  <%= link_to 'Back', form_types_path %>
+</div>

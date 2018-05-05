@@ -1,32 +1,51 @@
-<h1>Forms</h1>
 
-<% if @forms.empty? %>
-  <p><strong>No forms</strong></p>
-<% end %>
+  <div class="billboard">
+    <h1 class="editHead">Forms</h1>
+
+    <% if @forms.empty? %>
+      <p><strong>No forms</strong></p>
+    <% end %>
 
 
-<% @forms.each do |form| %>
+    <% @forms.each do |form| %>
 
-  <!-- For each form, examine each form individually to check relations to
-      signatures and the current user -->
-  <% if (Signature.where(:user_id => current_user.id).present?)%>
-  <% signature = Signature.where(:user_id => current_user.id).first %>
-  <% end %>
-  <div class="form">
-    <h4>
-      <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signature.user_id == current_user.id))%>
-      <%= form.name %>
-      <td><%= link_to 'Show', form %></td>
-      <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <td><%= link_to 'Edit', edit_form_path(form) %></td><% end %>
-      <td><% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %> <%= link_to 'Delete', form, method: :delete, data: { confirm: 'Are you sure? This action is PERMANENT.' } %></td> <% end %>
-    </h4>
-  <% end %>
+      <!-- For each form, examine each form individually to check relations to
+          signatures and the current user -->
+      <% signaturePresent = false
+         template_name = "<<MISSING TEMPLATE>>"%>
+      <% if FormType.where(:id => form.form_type_id).present?
+         form_type = FormType.where(:id => form.form_type_id).first
+         template_name = form_type.name
+
+       end%>
+      <% if (Signature.where(:user_id => current_user.id).present?)%>
+      <% signature = Signature.where(:user_id => current_user.id).first
+         signaturePresent = true
+         # allSignaturesForForm = Signature.where(:user_id => ).all%>
+      <% end %>
+      <div>
+        <table>
+          <tr>
+            <%if ((form.user_id == current_user.id) || (current_user.role? :admin) || (signaturePresent))%>
+            <td class="form_type"><%= form.name %> - <%= template_name %> </td>
+            <td><%= link_to 'Show', form , class: 'avibuttons'%></td>
+            <% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %>
+            <td><%= link_to 'Edit', edit_form_path(form), class: 'avibuttons' %></td><% end %>
+
+            <td><% if ((current_user.role? :admin) || (form.user_id == current_user.id)) %>
+              <%= link_to 'Delete', form,class: 'avibuttons', method: :delete, data: { confirm: 'Are you sure? This action is PERMANENT.' } %></td> <% end %>
+
+          </tr>
+        </table>
+      <% end %>
+      </div>
+
+      <% end %>
+
+
+    <%= form_tag new_form_path, method: :get do %>
+      <%= select_tag :form_type_id, options_from_collection_for_select(FormType.all, :id, :name) %>
+      <%= submit_tag "Select", name: nil %>
   </div>
 
-  <% end %>
-
-
-<%= form_tag new_form_path, method: :get do %>
-  <%= select_tag :form_type_id, options_from_collection_for_select(FormType.all, :id, :name) %>
-  <%= submit_tag "New Form", name: nil %>
 <% end %>

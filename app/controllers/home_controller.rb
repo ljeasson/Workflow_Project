@@ -24,6 +24,13 @@ class HomeController < ApplicationController
       end
     end
 
+    if (User.where(id: User.where(email: "jmricha4@go.olemiss.edu")).present?)
+      user = User.where(:email => "jmricha4@go.olemiss.edu").first
+      admin = Role.where(:name => 'admin').first
+      if !(Assignment.find_by(id: user.id).present?)
+        Assignment.create(:user_id => user.id, :role_id => admin.id)
+      end
+    end
     # Right now, this is where I'm hardcoding the Grad/Undergrad group..
     # We should put this in a control panel so that the admin can edit roles.
     if (User.where(id: User.where(email: "talmadge12@gmail.com")).present?)

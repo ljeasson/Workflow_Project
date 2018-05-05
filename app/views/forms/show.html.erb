@@ -1,9 +1,28 @@
 <% if (@form.finalized) %>
   <h3><div class="alart alert-info"> This form has been finalized. No more actions can be taken here. </div></h3>
 <% end %>
-<h1>Form Details:</h1>
+<!-- This is where I'm dealing with all workflow frontend related to their relative controllers. -->
+<% if (Signature.where(:form_id => @form.id).present?)%>
+<% @signature = Signature.where(:user_id => current_user.id).first %>
 
-<p>
+<% #Defining variables for use in the form_tag
+  form_id = @form.id
+  @user = User.all
+  @current_workflow = Signature.where(:user_id => current_user.id).first
+
+
+  %>
+<div class="dropsite">
+
+  <% tepmlate_name= "<<NULL NAME DUE TO FORM TEMPLATE DELETION>>"
+    if FormType.where(:id => @form.form_type_id).present?
+      form= @form
+      template= FormType.where(:id => form.form_type_id).first
+      template_name= template.name
+    end
+    %>
+
+  <h1><%= template_name%></h1><br>
   <b>Name:</b>
   <%= @form.name %>
   <% if @form.grad %>
@@ -13,8 +32,6 @@
     <b><%= "(Undergraduate)"%></b>
   <% end %>
 </p>
-
-
 <% @form.properties.each do |name, value| %>
   <p>
     <b><%= name.humanize %>:</b>
@@ -31,62 +48,78 @@
     <%end %>
   </p>
 <% end %>
-
-<p>
-  <%if ((@form.user_id == current_user.id) || (current_user.role? :admin))%><%= link_to 'Edit', edit_form_path(@form) %> | <% end %>
-  <%= link_to 'Back to Forms', forms_path %>
-</p>
-
-
-
-<!-- This is where I'm dealing with all workflow frontend related to their relative controllers. -->
-<% if (Signature.where(:form_id => @form.id).present?)%>
-<% @signature = Signature.where(:user_id => current_user.id).first %>
-
-<% #Defining variables for use in the form_tag
-  form_id = @form.id
-  @user = User.all
-  @current_workflow = Signature.where(:user_id => current_user.id).first
+<% if Comment.where(:form_id => @form.id).present? %>
+  <%@comments2 = Comment.where(:form_id => @form.id) %>
+  <% @comments2.each do |c| %>
+  <p>Signature: <%= c.name %></p>
+  <% end %>
+ <%end %>
 
 
-  %>
-  <% if (!(@signature.nil?) && (@signature.user_id == current_user.id && !@signature.processed)) %>
 
-    <%= form_tag new_signature_path do %>
-      <%if !(@form.finalized) %>
-        <p>Signature:</p><%= text_field_tag "name", current_user.name %>
-        <p> Comments(optional): </p>
-        <%= text_area_tag "body", "", size: "30x5" %><br>
+</div>
+    <div class="sidebarEdit">
+      <h1>Form Details:</h1>
+      <p>
 
-        <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
-        <%= hidden_field_tag("form_id", form_id) %>
-        <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
-        <%= submit_tag "Send to Faculty Member"  %>
+
+      <p>
+        <table>
+          <tr>
+            <td><%= link_to "Print", '#', class: "avibuttons",
+            onclick: 'window.print();return false;' %>
+            </td>
+            <td><%if ((@form.user_id == current_user.id) || (current_user.role? :admin))%>
+            <%= link_to 'Edit', edit_form_path(@form), class: 'avibuttons2' %>
+             <% end %>
+            </td>
+            <td><%= link_to 'Back', forms_path , class: 'avibuttons2'%>
+            </td>
+          </tr>
+        </table>
+      </p>
+
+
+
+
+        <% if (!(@signature.nil?) && (@signature.user_id == current_user.id && !@signature.processed)) %>
+
+          <%= form_tag new_signature_path do %>
+            <%if !(@form.finalized) %>
+              <p>Signature:</p><%= text_field_tag "name", current_user.name %>
+              <p> Comments(optional): </p>
+              <%= text_area_tag "body", "", size: "30x5" %><br>
+
+              <%= select_tag "user", options_from_collection_for_select(User.all, 'id', 'email') %>
+              <%= hidden_field_tag("form_id", form_id) %>
+              <%= hidden_field_tag("current_workflow", @current_workflow.id) %>
+              <%= submit_tag "Send to Faculty Member"  %>
+            <% end %>
+          <% end %> <!-- End form tag -->
+
+        <% end %> <!-- End block checking for nil -->
       <% end %>
-    <% end %> <!-- End form tag -->
 
-  <% end %> <!-- End block checking for nil -->
-<% end %>
+      <% if (current_user.role? :admin) %>
+        <% if !(@form.finalized) %>
+          <%= form_tag finalize_form_path do %>
+            <%= hidden_field_tag("form_id", @form.id) %>
+            <%= hidden_field_tag("finalize", 1) %>
+            <%= submit_tag "Finalize" %>
+          <% end %>
+        <% end %>
+      <% end %>
 
-<% if (current_user.role? :admin) %>
-  <% if !(@form.finalized) %>
-    <%= form_tag finalize_form_path do %>
-      <%= hidden_field_tag("form_id", @form.id) %>
-      <%= hidden_field_tag("finalize", 1) %>
-      <%= submit_tag "Finalize" %>
-    <% end %>
-  <% end %>
-<% end %>
-
-<% if ((Comment.where(:form_id => @form.id).any?) && ((@signature.user_id == current_user.id || (current_user.role? :admin))))  %>
-  <p> Comments: </p>
-  <%@comments = Comment.where(:form_id => @form.id) %>
-  <% @comments.each do |c| %>
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <%= "[" + c.name + "]:"%>
-      <%= c.body %>
+    <% if ((Comment.where(:form_id => @form.id).any?) && ((@signature.user_id == current_user.id || (current_user.role? :admin))))  %>
+       <p> Comments: </p>
+        <%@comments = Comment.where(:form_id => @form.id) %>
+        <% @comments.each do |c| %>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= "[" + c.name + "]:"%>
+            <%= c.body %>
+          </div>
+        </div>
     </div>
-  </div>
-  <% end %>
+    <% end %>
 <% end %>
